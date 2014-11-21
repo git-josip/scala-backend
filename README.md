@@ -15,7 +15,9 @@ example response: http://demo3385913.mockable.io/api/v1/single-create-response
 
 - JSON Web Tokens (JWT) is used for user identification and authentication
 
-- application is divided into modules i.e. user module, organization-structure module etc.
+- application is divided into modules i.e. user module, organization-structure module etc. Each module have dao, domain, validation, service packages.
+
+- for dependency injection it is uused: Spring dependecy injection
 
 
 
