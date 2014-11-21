@@ -1,0 +1,14 @@
+
+# Users routes
+GET         /users/:id                                                                @controllers.api.v1.UserController.read(id: Long)
+POST        /users                                                                    @controllers.api.v1.UserController.create
+
+# OrganizationStructure routes
+POST        /organization-structure                                                   @controllers.api.v1.OrganizationStructureController.create
+GET         /organization-structure/single/:id                                        @controllers.api.v1.OrganizationStructureController.read(id: Long)
+GET         /organization-structure/all                                               @controllers.api.v1.OrganizationStructureController.all
+GET         /organization-structure/all/type/:organizationStructureType               @controllers.api.v1.OrganizationStructureController.allByType(organizationStructureType: String)
+GET         /organization-structure/all/lookup/type/:organizationStructureType        @controllers.api.v1.OrganizationStructureController.allLookupByType(organizationStructureType: String)
+GET         /organization-structure/all/parent/:parentId                              @controllers.api.v1.OrganizationStructureController.allByParent(parentId: Long)
+GET         /organization-structure/all/parent                                        @controllers.api.v1.OrganizationStructureController.allParentLess
+GET         /organization-structure/type/all                                          @controllers.api.v1.OrganizationStructureController.allTypes
