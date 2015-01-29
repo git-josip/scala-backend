@@ -1,4 +1,4 @@
-scala-backend-sampling
+scala-backend
 ======================
 
 This is sample rest application using Scala, PlayFramework with Postgres.
