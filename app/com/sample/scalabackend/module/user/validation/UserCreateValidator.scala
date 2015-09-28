@@ -12,9 +12,11 @@ import com.sample.scalabackend.core.utils.ValidateUtils
 class UserCreateValidator @Autowired
 (
   private val entityDomainService: UserDomainService
-) extends Validator[UserCreateEntity]
-{
+) extends Validator[UserCreateEntity] {
   Asserts.argumentIsNotNull(entityDomainService)
+
+  private val MAX_ALLOWED_LENGTH = 80
+  private val MAX_ALLOWED_CHARACTER_ERROR = s"must be less than or equal to $MAX_ALLOWED_LENGTH character"
 
   override def validate(item: UserCreateEntity): ValidationResult[UserCreateEntity] =
   {
@@ -34,38 +36,35 @@ class UserCreateValidator @Autowired
     )
   }
 
-  private def validateFirstName(item: UserCreateEntity, validationMessages: Messages)
-  {
+  private def validateFirstName(item: UserCreateEntity, validationMessages: Messages) {
     val localMessages = Messages.of(validationMessages)
 
     val fieldValue = item.firstName
 
     ValidateUtils.validateLengthIsLessThanOrEqual(
       fieldValue,
-      80,
+      MAX_ALLOWED_LENGTH,
       localMessages,
       UserCreateEntity.FIRST_NAME_FORM_ID.value,
-      "must be less than or equal to 80 character"
+      MAX_ALLOWED_CHARACTER_ERROR
     )
   }
 
-  private def validateLastName(item: UserCreateEntity, validationMessages: Messages)
-  {
+  private def validateLastName(item: UserCreateEntity, validationMessages: Messages) {
     val localMessages = Messages.of(validationMessages)
 
     val fieldValue = item.lastName
 
     ValidateUtils.validateLengthIsLessThanOrEqual(
       fieldValue,
-      80,
+      MAX_ALLOWED_LENGTH,
       localMessages,
       UserCreateEntity.LAST_NAME_FORM_ID.value,
-      "must be less than or equal to 80 character"
+      MAX_ALLOWED_CHARACTER_ERROR
     )
   }
 
-  private def validateEmail(item: UserCreateEntity, validationMessages: Messages)
-  {
+  private def validateEmail(item: UserCreateEntity, validationMessages: Messages) {
     val localMessages = Messages.of(validationMessages)
 
     val fieldValue = item.email
@@ -76,58 +75,60 @@ class UserCreateValidator @Autowired
       localMessages
     )
 
-    val doesExistWithEmail = this.entityDomainService.doesExistByByEmail(fieldValue)
-    ValidateUtils.isFalse(
-      doesExistWithEmail,
-      localMessages,
-      UserCreateEntity.EMAIL_FORM_ID.value,
-      "User already exists with this email"
-    )
-
     ValidateUtils.validateLengthIsLessThanOrEqual(
       fieldValue,
-      80,
+      MAX_ALLOWED_LENGTH,
       localMessages,
       UserCreateEntity.EMAIL_FORM_ID.value,
-      "must be less than or equal to 80 character"
+      MAX_ALLOWED_CHARACTER_ERROR
     )
+
+    if(!localMessages.hasErrors()) {
+      val doesExistWithEmail = this.entityDomainService.doesExistByByEmail(fieldValue)
+      ValidateUtils.isFalse(
+        doesExistWithEmail,
+        localMessages,
+        UserCreateEntity.EMAIL_FORM_ID.value,
+        "User already exists with this email"
+      )
+    }
   }
 
-  private def validateUserName(item: UserCreateEntity, validationMessages: Messages)
-  {
+  private def validateUserName(item: UserCreateEntity, validationMessages: Messages) {
     val localMessages = Messages.of(validationMessages)
 
     val fieldValue = item.username
 
-    val doesExistWithUsername = this.entityDomainService.doesExistByUsername(fieldValue)
-    ValidateUtils.isFalse(
-      doesExistWithUsername,
-      localMessages,
-      UserCreateEntity.USERNAME_FORM_ID.value,
-      "User already exists with this username"
-    )
-
     ValidateUtils.validateLengthIsLessThanOrEqual(
       fieldValue,
-      80,
+      MAX_ALLOWED_LENGTH,
       localMessages,
       UserCreateEntity.USERNAME_FORM_ID.value,
-      "must be less than or equal to 80 character"
+      MAX_ALLOWED_CHARACTER_ERROR
     )
+
+    if(!localMessages.hasErrors()) {
+      val doesExistWithUsername = this.entityDomainService.doesExistByUsername(fieldValue)
+      ValidateUtils.isFalse(
+        doesExistWithUsername,
+        localMessages,
+        UserCreateEntity.USERNAME_FORM_ID.value,
+        "User already exists with this username"
+      )
+    }
   }
 
-  private def validatePassword(item: UserCreateEntity, validationMessages: Messages)
-  {
+  private def validatePassword(item: UserCreateEntity, validationMessages: Messages) {
     val localMessages = Messages.of(validationMessages)
 
     val fieldValue = item.password
 
     ValidateUtils.validateLengthIsLessThanOrEqual(
       fieldValue,
-      80,
+      MAX_ALLOWED_LENGTH,
       localMessages,
       UserCreateEntity.PASSWORD_FORM_ID.value,
-      "must be less than or equal to 80 character"
+      MAX_ALLOWED_CHARACTER_ERROR
     )
   }
 }

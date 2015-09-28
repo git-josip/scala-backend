@@ -6,17 +6,14 @@ import play.api.libs.json.{JsValue, Json, Writes}
 import Asserts._
 import scala.collection.mutable.{ListBuffer => MutebleList}
 
-case class Messages private
-(
+case class Messages private(
   private val parentMessages: Option[Messages]
-)
-{
+) {
   argumentIsNotNull(parentMessages)
 
   private val _messages : MutebleList[Message] = MutebleList.empty[Message]
 
-  def putMessage(message: Message)
-  {
+  def putMessage(message: Message) {
     argumentIsNotNull(message)
 
     _messages += message
@@ -27,8 +24,7 @@ case class Messages private
     }
   }
 
-  def putMessages(messages: Messages)
-  {
+  def putMessages(messages: Messages) {
     argumentIsNotNull(messages)
 
     _messages ++= messages.messages.toSeq
@@ -39,29 +35,25 @@ case class Messages private
     }
   }
 
-  def putInformation(text: String) =
-  {
+  def putInformation(text: String) = {
     argumentIsNotNullNorEmpty(text)
 
     this.putMessage(Message.information(text))
   }
-  def putInformation(key: MessageKey, text: String) =
-  {
+  def putInformation(key: MessageKey, text: String) = {
     argumentIsNotNull(key)
     argumentIsNotNullNorEmpty(text)
 
     this.putMessage(Message.information(key, text))
   }
-  def putInformation(text: String, childMessages: Messages) =
-  {
+  def putInformation(text: String, childMessages: Messages) = {
     argumentIsNotNullNorEmpty(text)
     argumentIsNotNull(childMessages)
 
     this.putMessage(Message.information(text, childMessages))
   }
 
-  def putInformation(key: MessageKey, text: String, childMessages: Messages) =
-  {
+  def putInformation(key: MessageKey, text: String, childMessages: Messages) = {
     argumentIsNotNullNorEmpty(text)
     argumentIsNotNull(key)
     argumentIsNotNull(childMessages)
@@ -69,8 +61,7 @@ case class Messages private
     this.putMessage(Message.information(key, text, childMessages))
   }
 
-  def putWarning(text: String) =
-  {
+  def putWarning(text: String) = {
     argumentIsNotNullNorEmpty(text)
 
     this.putMessage(Message.warning(text))
@@ -82,16 +73,14 @@ case class Messages private
 
     this.putMessage(Message.warning(key, text))
   }
-  def putWarning(text: String, childMessages: Messages) =
-  {
+  def putWarning(text: String, childMessages: Messages) = {
     argumentIsNotNullNorEmpty(text)
     argumentIsNotNull(childMessages)
 
     this.putMessage(Message.warning(text, childMessages))
   }
 
-  def putWarning(key: MessageKey, text: String, childMessages: Messages) =
-  {
+  def putWarning(key: MessageKey, text: String, childMessages: Messages) = {
     argumentIsNotNullNorEmpty(text)
     argumentIsNotNull(key)
     argumentIsNotNull(childMessages)
@@ -99,29 +88,25 @@ case class Messages private
     this.putMessage(Message.warning(key, text, childMessages))
   }
 
-  def putError(text: String) =
-  {
+  def putError(text: String) = {
     argumentIsNotNullNorEmpty(text)
 
     this.putMessage(Message.error(text))
   }
-  def putError(key: MessageKey, text: String) =
-  {
+  def putError(key: MessageKey, text: String) = {
     argumentIsNotNullNorEmpty(text)
     argumentIsNotNull(key)
 
     this.putMessage(Message.error(key, text))
   }
-  def putError(text: String, childMessages: Messages) =
-  {
+  def putError(text: String, childMessages: Messages) = {
     argumentIsNotNullNorEmpty(text)
     argumentIsNotNull(childMessages)
 
     this.putMessage(Message.error(text, childMessages))
   }
 
-  def putError(key: MessageKey, text: String, childMessages: Messages) =
-  {
+  def putError(key: MessageKey, text: String, childMessages: Messages) = {
     argumentIsNotNullNorEmpty(text)
     argumentIsNotNull(key)
     argumentIsNotNull(childMessages)
@@ -129,82 +114,68 @@ case class Messages private
     this.putMessage(Message.error(key, text, childMessages))
   }
 
-  def hasAnyMessageWith(messageType: MessageType): Boolean =
-  {
+  def hasAnyMessageWith(messageType: MessageType): Boolean = {
     argumentIsNotNull(messageType)
 
     messages.toSeq.foreach(message => {
       if( isMessageWantedType(message, messageType)){ return true }
     })
 
-    return false
+    false
   }
 
-  def hasInformation() =
-  {
+  def hasInformation() = {
     this.hasAnyMessageWith(MessageType.INFORMATION)
   }
 
-  def hasWarnings() =
-  {
+  def hasWarnings() = {
     this.hasAnyMessageWith(MessageType.WARNING)
   }
 
-  def hasErrors() =
-  {
+  def hasErrors() = {
     this.hasAnyMessageWith(MessageType.ERROR)
   }
 
-  def hasAnyErrorsWithMessageKey(messageKey: MessageKey): Boolean =
-  {
+  def hasAnyErrorsWithMessageKey(messageKey: MessageKey): Boolean = {
     val errorsWithGivenKey = this.errors().filter(_.key.isDefined).filter(_.key.get.equals(messageKey))
     !errorsWithGivenKey.isEmpty
   }
 
-  def messages() =
-  {
+  def messages() = {
     _messages.toSeq
   }
 
-  def messages(messageType: MessageType) :Seq[Message] =
-  {
+  def messages(messageType: MessageType) :Seq[Message] = {
     argumentIsNotNull(messageType)
 
     filterMessages(this.messages, Seq(messageType))
   }
 
-  def information() =
-  {
+  def information() = {
     this.messages(MessageType.INFORMATION)
   }
 
-  def warnings() =
-  {
+  def warnings() = {
     this.messages(MessageType.WARNING)
   }
 
-  def errors() =
-  {
+  def errors() = {
     this.messages(MessageType.ERROR)
   }
 
-  def bindMessages() =
-  {
+  def bindMessages() = {
     this.messages.filter(_.key.isDefined)
   }
 
-  def bindInformation() =
-  {
+  def bindInformation() = {
     filterMessages(this.bindMessages, Seq(MessageType.INFORMATION))
   }
 
-  def bindWarnings() =
-  {
+  def bindWarnings() = {
     filterMessages(this.bindMessages, Seq(MessageType.WARNING))
   }
 
-  def bindErrors() =
-  {
+  def bindErrors() = {
     filterMessages(this.bindMessages, Seq(MessageType.ERROR))
   }
 
@@ -215,8 +186,7 @@ case class Messages private
     })
   }
 
-  private def isMessagesInWantedTypes(message: Message, messageTypes: Seq[MessageType]) =
-  {
+  private def isMessagesInWantedTypes(message: Message, messageTypes: Seq[MessageType]) = {
     val filteredTypes = messageTypes.filter(messageType => isMessageWantedType(message, messageType))
     filteredTypes.size match {
       case 0 => false
@@ -224,8 +194,7 @@ case class Messages private
       case _ => throw new RuntimeException
     }
   }
-  private def isMessageWantedType(message: Message, messageType: MessageType) =
-  {
+  private def isMessageWantedType(message: Message, messageType: MessageType) = {
     messageType match {
       case MessageType.INFORMATION  => message.messageType.isInformation
       case MessageType.WARNING      => message.messageType.isWarning
@@ -235,8 +204,7 @@ case class Messages private
     }
   }
 
-  def responseErrors: JsValue =
-  {
+  def responseErrors: JsValue = {
     val errorMessages = this.errors()
     val errorMessagesWithKey = errorMessages.filter(_.key.isDefined)
     val messagesGroupedByKey = errorMessagesWithKey.groupBy(_.key)
@@ -244,13 +212,11 @@ case class Messages private
     Json.toJson(errorTextByKey)
   }
 
-  def toJson: String =
-  {
+  def toJson: String = {
     Json.prettyPrint(Json.toJson(this)(Messages.jsonWrites))
   }
 
-  override def equals(otherAsAny: Any): Boolean =
-  {
+  override def equals(otherAsAny: Any): Boolean = {
     if(otherAsAny == null)                  return false
     if(!otherAsAny.isInstanceOf[Messages])  return false
 
@@ -260,8 +226,7 @@ case class Messages private
             this.parentMessages.equals(other.parentMessages)
   }
 
-  override def hashCode: Int =
-  {
+  override def hashCode: Int = {
     return Objects.hashCode(
       this.parentMessages,
       this.messages
@@ -269,15 +234,12 @@ case class Messages private
   }
 }
 
-object Messages
-{
-  def of =
-  {
+object Messages {
+  def of = {
     Messages(None);
   }
 
-  def of(parentMessages: Messages) =
-  {
+  def of(parentMessages: Messages) = {
     argumentIsNotNull(parentMessages)
 
     Messages(Some(parentMessages))
