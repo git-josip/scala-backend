@@ -1,16 +1,16 @@
 package controllers.api.v1
 
 import akka.actor.ActorRef
-import com.laplacian.scalabackendsampling.configuration.actor.ActorFactory
-import com.laplacian.scalabackendsampling.core.Asserts
-import com.laplacian.scalabackendsampling.core.response.ResponseTools
-import com.laplacian.scalabackendsampling.core.utils.StringUtils
-import com.laplacian.scalabackendsampling.module.authentication.service.AuthenticationService
-import com.laplacian.scalabackendsampling.module.log.action.actor.ActionLogCreateMsg
-import com.laplacian.scalabackendsampling.module.log.action.domain.{ActionType, ActionDomainType, ActionLogEntity}
-import com.laplacian.scalabackendsampling.module.organizationstructure.domain.{OrganizationStructureType, OrganizationStructureDetailsEntity, OrganizationStructureCreateEntity}
-import com.laplacian.scalabackendsampling.module.organizationstructure.service.domain.OrganizationStructureDomainService
-import com.laplacian.scalabackendsampling.module.organizationstructure.validation.OrganizationStructureCreateValidator
+import com.sample.scalabackend.configuration.actor.ActorFactory
+import com.sample.scalabackend.core.Asserts
+import com.sample.scalabackend.core.response.ResponseTools
+import com.sample.scalabackend.core.utils.StringUtils
+import com.sample.scalabackend.module.authentication.service.AuthenticationService
+import com.sample.scalabackend.module.log.action.actor.ActionLogCreateMsg
+import com.sample.scalabackend.module.log.action.domain.{ActionType, ActionDomainType, ActionLogEntity}
+import com.sample.scalabackend.module.organizationstructure.domain.{OrganizationStructureType, OrganizationStructureDetailsEntity, OrganizationStructureCreateEntity}
+import com.sample.scalabackend.module.organizationstructure.service.domain.OrganizationStructureDomainService
+import com.sample.scalabackend.module.organizationstructure.validation.OrganizationStructureCreateValidator
 import controllers.core.SecuredController
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype

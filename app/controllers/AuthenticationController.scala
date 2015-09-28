@@ -1,15 +1,15 @@
 package controllers
 
-import com.laplacian.scalabackendsampling.core.response.{ResponseTools, RestResponse}
+import com.sample.scalabackend.core.response.{ResponseTools, RestResponse}
 import org.springframework.stereotype
 import org.springframework.beans.factory.annotation.Autowired
-import com.laplacian.scalabackendsampling.module.user.service.domain.UserDomainService
-import com.laplacian.scalabackendsampling.module.authentication.service.AuthenticationService
-import com.laplacian.scalabackendsampling.core.Asserts
+import com.sample.scalabackend.module.user.service.domain.UserDomainService
+import com.sample.scalabackend.module.authentication.service.AuthenticationService
+import com.sample.scalabackend.core.Asserts
 import play.api.libs.json.Json
 import play.api.mvc.{Controller, Action}
-import com.laplacian.scalabackendsampling.core.authentication.Credentials
-import com.laplacian.scalabackendsampling.core.jwt.ResponseToken
+import com.sample.scalabackend.core.authentication.Credentials
+import com.sample.scalabackend.core.jwt.ResponseToken
 
 @stereotype.Controller
 class AuthenticationController @Autowired

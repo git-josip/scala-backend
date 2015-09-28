@@ -1,8 +1,7 @@
 import java.util.TimeZone
-
-import com.laplacian.scalabackendsampling.configuration.actor.ActorFactory
-import com.laplacian.scalabackendsampling.core.communication.CORSFilter
-import com.laplacian.scalabackendsampling.configuration.SpringConfiguration
+import com.sample.scalabackend.configuration.SpringConfiguration
+import com.sample.scalabackend.configuration.actor.ActorFactory
+import com.sample.scalabackend.core.communication.CORSFilter
 import org.joda.time.DateTimeZone
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import play.api.mvc.WithFilters

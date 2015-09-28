@@ -1,9 +1,9 @@
 package controllers.core
 
-import com.laplacian.scalabackendsampling.core.{ValidationResult, Validator, Asserts}
-import com.laplacian.scalabackendsampling.core.response.ResponseTools
-import com.laplacian.scalabackendsampling.module.authentication.service.AuthenticationService
-import com.laplacian.scalabackendsampling.module.user.domain.UserDetailsEntity
+import com.sample.scalabackend.core.{ValidationResult, Validator, Asserts}
+import com.sample.scalabackend.core.response.ResponseTools
+import com.sample.scalabackend.module.authentication.service.AuthenticationService
+import com.sample.scalabackend.module.user.domain.UserDetailsEntity
 import play.api.libs.json.{Format, Writes, JsValue}
 import play.api.mvc._
 
