@@ -1,6 +1,6 @@
 package controllers.core
 
-import com.sample.scalabackend.core.{ValidationResult, Validator, Asserts}
+import com.sample.scalabackend.core.{ValidationResult, ItemValidator, Asserts}
 import com.sample.scalabackend.core.response.ResponseTools
 import com.sample.scalabackend.module.authentication.service.AuthenticationService
 import com.sample.scalabackend.module.user.domain.UserDetailsEntity
@@ -42,7 +42,7 @@ abstract class SecuredController
     }
   }
 
-  def MutateJsonAction[T: Format: Manifest](validator: Validator[T])(mutateBlock: (Request[JsValue], ValidationResult[T]) => Future[Result]): Action[JsValue] = {
+  def MutateJsonAction[T: Format: Manifest](validator: ItemValidator[T])(mutateBlock: (Request[JsValue], ValidationResult[T]) => Future[Result]): Action[JsValue] = {
     Action.async(parse.json) {
       request =>
         request.body.validate[T].map {
@@ -62,7 +62,7 @@ abstract class SecuredController
     }
   }
 
-  def MutateJsonAuthenticatedAction[T: Format: Manifest](validator: Validator[T])(mutateBlock: (Request[JsValue], ValidationResult[T], UserDetailsEntity) => Future[Result]): Action[JsValue] = {
+  def MutateJsonAuthenticatedAction[T: Format: Manifest](validator: ItemValidator[T])(mutateBlock: (Request[JsValue], ValidationResult[T], UserDetailsEntity) => Future[Result]): Action[JsValue] = {
     AuthenticatedAction(parse.json) {
       request =>
         val requestUser = userFromSecuredRequest(request)

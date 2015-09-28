@@ -1,6 +1,6 @@
 package com.sample.scalabackend.module.user.validation
 
-import com.sample.scalabackend.core.{ValidationResult, Validator, Asserts}
+import com.sample.scalabackend.core.{ValidationResult, ItemValidator, Asserts}
 import com.sample.scalabackend.core.messages.Messages
 import com.sample.scalabackend.module.user.domain.UserCreateEntity
 import com.sample.scalabackend.module.user.service.domain.UserDomainService
@@ -12,7 +12,7 @@ import com.sample.scalabackend.core.utils.ValidateUtils
 class UserCreateValidator @Autowired
 (
   private val entityDomainService: UserDomainService
-) extends Validator[UserCreateEntity] {
+) extends ItemValidator[UserCreateEntity] {
   Asserts.argumentIsNotNull(entityDomainService)
 
   private val MAX_ALLOWED_LENGTH = 80

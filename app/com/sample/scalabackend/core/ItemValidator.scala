@@ -4,27 +4,22 @@ import com.sample.scalabackend.core.messages.Messages
 import com.sample.scalabackend.core.response.ResponseTools
 import play.api.libs.json.Writes
 
-trait Validator[T]
-{
+trait ItemValidator[T] {
   def validate(item:T) : ValidationResult[T]
 }
 
-case class ValidationResult[T: Writes]
-(
+case class ValidationResult[T: Writes](
   validatedItem : T,
   messages      : Messages
-)
-{
+) {
   Asserts.argumentIsNotNull(validatedItem)
   Asserts.argumentIsNotNull(messages)
 
-  def isValid :Boolean =
-  {
+  def isValid :Boolean = {
     !messages.hasErrors
   }
 
-  def errorsRestResponse =
-  {
+  def errorsRestResponse = {
     Asserts.argumentIsTrue(!this.isValid)
 
     ResponseTools.of(

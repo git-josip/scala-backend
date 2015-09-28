@@ -2,11 +2,11 @@ package com.sample.scalabackend.module.organizationstructure.validation
 
 import com.sample.scalabackend.core.messages.Messages
 import com.sample.scalabackend.core.utils.ValidateUtils
-import com.sample.scalabackend.core.{ValidationResult, Asserts, Validator}
+import com.sample.scalabackend.core.{ValidationResult, Asserts, ItemValidator}
 import com.sample.scalabackend.module.organizationstructure.domain.{OrganizationStructureType, OrganizationStructureCreateEntity}
 import com.sample.scalabackend.module.organizationstructure.service.domain.OrganizationStructureDomainService
 import com.sample.scalabackend.core.utils.ValidateUtils
-import com.sample.scalabackend.core.{ValidationResult, Asserts, Validator}
+import com.sample.scalabackend.core.{ValidationResult, Asserts, ItemValidator}
 import com.sample.scalabackend.module.organizationstructure.domain.OrganizationStructureCreateEntity
 import com.sample.scalabackend.module.organizationstructure.service.domain.OrganizationStructureDomainService
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component
 class OrganizationStructureCreateValidator @Autowired
 (
   private val entityDomainService: OrganizationStructureDomainService
-) extends Validator[OrganizationStructureCreateEntity]
+) extends ItemValidator[OrganizationStructureCreateEntity]
 {
   Asserts.argumentIsNotNull(entityDomainService)
 
